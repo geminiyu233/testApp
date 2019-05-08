@@ -1,0 +1,58 @@
+<div>
+  <h1>响应式表单</h1>
+  <h2>1、单个表单输入</h2>
+  <label>
+    Name:
+    <input type="text" [formControl]="name">
+  </label>
+  <p>
+    Value: {{ name.value }}
+  </p>
+
+  <p>
+    <button (click)="updateName()">Update Name</button>
+  </p>
+</div>
+
+<div>
+  <h2>2、表单组</h2>
+  <!-- formControlName把每个输入属性与formGroup绑定起来 -->
+  <form [formGroup]="profileForm" (ngSubmit)="onSubmit()">
+    <label>
+      First Name:
+      <input type="text" formControlName="firstName" required>
+    </label>
+
+    <label>
+      Last Name:
+      <input type="text" formControlName="lastName">
+    </label>
+    <p>
+      <button type="submit">Submit</button>
+    </p>
+    <p>
+      <button type="button" (click)="updateProfile()">Update Profile</button>
+    </p>
+    <p>
+      Form Status: {{ profileForm.status }}
+    </p>
+
+
+    <!-- *ngFor 指令对 aliases FormArray 提供的每个 FormControl 进行迭代。
+      因为 FormArray 中的元素是匿名的，所以你要把索引号赋值给 i 变量，并且把它传给每个控件的 formControlName 输入属性。 -->
+    <div formArrayName="aliases">
+      <h2>3、使用表单数组管理动态控件</h2> <button (click)="addAlias()">Add Alias</button>
+
+      <div *ngFor="let address of aliases.controls; let i=index">
+        <!-- The repeated alias template -->
+        <label>
+          Alias:
+          <input type="text" [formControlName]="i">
+        </label>
+      </div>
+    </div>
+  </form>
+</div>
+<div>
+  <h1>模版驱动表单</h1>
+</div>
